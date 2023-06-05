@@ -7,7 +7,42 @@
     <title>Home page</title>
 </head>
 <body>
-    <h1>hey from this side</h1>
-  
+    <h1>URL shortner</h1> 
+     <% if (locals.id) { %>
+        <p>URL Generated : http://localhost:8000/<%= id %></p>
+      
+     <% } %>
+    <div>
+        <form method="POST" action="/url">
+            <label>Enter Your Original URL</label>
+            <input type="text" name="url" placeholder="https://example.com">
+            <button type="submit">Generate</button>
+        </form>
+    </div>
+    <% if (urls) { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>S. No</th> 
+                    <th>ShortID</th>
+                    <th>Redirect</th>
+                    <th>Clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <% urls.forEach((url, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= url.shortId %></td>
+                        <td><%= url.redirectURL %></td>
+                        <td><%= url.visitedHistory.length %></td>
+                    </tr>
+                <% }); %>
+                
+            </tbody>
+        </table>
+    <% } %>
+    
 </body>
 </html>
