@@ -1,4 +1,5 @@
 const express = require("express")
+const path = require('path');
 const urlRoute = require("./routes/routes.js");
 const { connectToMongoDB } = require("./connect.js");
 const URL = require('./models/url.js')
@@ -14,7 +15,18 @@ connectToMongoDB('mongodb+srv://rehanmohd042:ve4Km5TcucminqI0@rehan07.kst6pfo.mo
 console.log(error);
 })
 
+
+
+app.set('view engine', 'ejs');
+app.set("views", path.join(__dirname, "views"));
+
 app.use(express.json())
+
+app.get("/", async(req,res)=>{
+  const allUrls = await URL.find({});
+  return res.render('home')
+  urls: allUrls;
+})
 
 app.use("/url" , urlRoute)
 
